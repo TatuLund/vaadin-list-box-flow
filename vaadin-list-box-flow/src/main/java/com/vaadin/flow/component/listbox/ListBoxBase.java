@@ -71,6 +71,9 @@ public abstract class ListBoxBase<C extends ListBoxBase<C, ITEM, VALUE>, ITEM, V
     }
 
     private void setupDataProviderListener(DataProvider<ITEM, ?> dataProvider) {
+        if (dataProviderListenerRegistration != null) {
+            dataProviderListenerRegistration.remove();
+        }
         dataProviderListenerRegistration = dataProvider.addDataProviderListener(event -> {
             if (event instanceof DataRefreshEvent) {
                 refresh(((DataRefreshEvent<ITEM>) event).getItem());
